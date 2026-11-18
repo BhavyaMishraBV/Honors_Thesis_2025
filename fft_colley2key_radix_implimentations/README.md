@@ -65,4 +65,4 @@ Speed (C++, `g++ -O3`, one thread, Windows laptop):
 | 64 x 64 x 64 | 0.14 s | 0.0025 s |
 | 100 x 100 x 100 | 0.71 s | 0.013 s |
 
-FFTW3 is faster on a single core, by roughly 50x at these sizes: it is heavily tuned and vectorized, while this code is a straightforward recursive implementation. The value of this version is flexibility (any 2^a 3^b 5^c grid on unflattened 3D arrays) and a structure that is easy to parallelize; see [`../FFT_with_CPU_Parallelization`](../FFT_with_CPU_Parallelization). Timings depend on the machine and compiler flags, so run `./rd2` to get your own.
+FFTW3 is faster on a single core, by roughly 50x at these sizes: it is heavily tuned and vectorized, while this code is a straightforward recursive implementation. The value of this version is flexibility (any 2^a 3^b 5^c grid on unflattened 3D arrays) and a structure that is easy to parallelize; see [`../FFT_with_CPU_Parallelization`](../FFT_with_CPU_Parallelization). Timings depend on the machine and compiler flags, so run `./fft_colley2key_radix_implimentations` to get your own.
