@@ -1,6 +1,6 @@
 # Fast-12
 
-A compact, single-file C++ program that evolves the cosmic pion field on a periodic 3D grid, using the FFTW3 library for all Fourier transforms. It is an early version of the code that grew into **PLASTIC++** in [Dr. Bart Horn's repository](https://github.com/bhorn9/pion_lss_code/blob/main/PLASTIC%2B%2B.cpp), and it is the baseline for the custom FFTs in [`../fft_colley2key_radix_implimentations`](../fft_colley2key_radix_implimentations) and [`../FFT_with_CPU_Parallelization`](../FFT_with_CPU_Parallelization).
+A compact, single-file C++ program that evolves the cosmic pion field on a periodic 3D grid, using the FFTW3 library for all Fourier transforms. It is an early version of the code that grew into **PLASTIC++** in [Dr. Bart Horn's repository](https://github.com/bhorn9/pion_lss_code/blob/main/PLASTIC%2B%2B.cpp), and it is the baseline for the custom FFTs in [`fft_colley2key_radix_implimentations`](fft_colley2key_radix_implimentations) and [`../FFT_with_CPU_Parallelization`](../FFT_with_CPU_Parallelization).
 
 **Authors and copyright:** Dr. Bart Horn and Bhavya Mishra (co-authors and co-copyright holders). Released under the MIT license; see the header of `Source.cpp`.
 
