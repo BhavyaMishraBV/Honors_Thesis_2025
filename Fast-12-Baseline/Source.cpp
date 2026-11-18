@@ -141,9 +141,6 @@ int main(int argc, char* argv[])
     double time = time_init;
 
     double mesh[meshpoints][meshpoints][meshpoints][3] = { 0.0 };
-    int abc; cin >> abc;
-
-
     std::vector<std::vector<std::vector<double>>> ic1(
         meshpoints, std::vector<std::vector<double>>(
             meshpoints, std::vector<double>(meshpoints, 0.0)
