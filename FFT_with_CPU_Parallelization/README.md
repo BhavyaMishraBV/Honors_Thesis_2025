@@ -1,13 +1,12 @@
-## FFT_with_CPU_Parallelization: multithreaded mixed-radix FFT
+# FFT_with_CPU_Parallelization: multithreaded mixed-radix FFT
 
-This folder holds a multithreaded version of the mixed-radix (2, 3, 5) FFT from fft_colley2key_radix_implimentations, extended with an inverse FFT and parallelized with OpenMP. A 3D FFT is a set of independent 1D FFTs along each axis, so each axis pass hands those 1D transforms to different threads. It works on any grid whose side lengths are products of 2, 3 and 5 (for example 25, 30, 64 or 100), including non-cubic grids.
+This folder holds a multithreaded version of the mixed-radix (2, 3, 5) FFT from [`fft_colley2key_radix_implimentations`](../fft_colley2key_radix_implimentations), extended with an inverse FFT and parallelized with OpenMP. A 3D FFT is a set of independent 1D FFTs along each axis, so each axis pass hands those 1D transforms to different threads. It works on any grid whose side lengths are products of 2, 3 and 5 (for example 25, 30, 64 or 100), including non-cubic grids.
 
-
-**Author:** Bhavya Mishra (advisor: Dr. Bart Horn). MIT license, see the header of `fft_cpu_parallel.cpp`.
+**Author:** Bhavya Mishra (advisor: Dr. Bart Horn). MIT license, see [`LICENSE`](LICENSE) in this folder and the header of `fft_cpu_parallel.cpp`.
 
 ## How it works
 
-- The 1D routines (`fft_recursive`, `fft_radix2/3/5`) are identical to the single-thread version in `rd2` and use only local data, so any number of threads can run them at the same time.
+- The 1D routines (`fft_recursive`, `fft_radix2/3/5`) are the same recursive code as in [`fft_colley2key_radix_implimentations`](../fft_colley2key_radix_implimentations), with one added argument (`sign`) that flips the twiddle factors for the inverse. They use only local data, so any number of threads can run them at the same time.
 - `fft_3d` makes three passes, along axis 1, axis 2 and axis 3. Within a pass, the independent slices are divided among the threads (`#pragma omp parallel for collapse(2)`). The passes themselves stay in order because each one uses the output of the previous pass.
 - The structure (many independent slices) is what would map onto a GPU. A GPU version is **not** implemented; this folder is the CPU version only.
 - `fft_3d(grid)` is the forward transform (same convention as `FFTW_FORWARD` and `numpy.fft.fftn`, no normalization). `ifft_3d(grid)` is the inverse (same convention as `numpy.fft.ifftn`, divided by the number of grid points). The inverse uses the same routines with the opposite sign in the twiddle factors. Both are parallelized.
@@ -57,5 +56,5 @@ Speed (`g++ -O3 -fopenmp`, 8 threads available, Windows machine, one run per siz
 
 ## Related
 
-- [fft radix method](fft_colley2key_radix_implimentation): the single-thread version and the Python version
-- [Baseline algorithm](Fast-12-Baseline): the simulation program that uses FFTW3, which these FFTs are meant to replace allowing us to scale the algorithm develoved in PLASCTIC.cpp
+- [fft_colley2key_radix_implimentations](../fft_colley2key_radix_implimentations): the single-thread C++ version and the Python version
+- [Fast-12-Baseline](../Fast-12-Baseline): the simulation program that uses FFTW3. These FFTs are meant to replace its FFTW3 calls, so the algorithm developed in PLASTIC++ can scale to other grid sizes and use multiple cores.
