@@ -1,4 +1,4 @@
-// Fast-12/Source.cpp
+// Fast-12-Baseline/Source.cpp
 // Copyright (c) 2025 Bart Horn and Bhavya Mishra
 // MIT License (see ../LICENSE). Early version of the pion-field simulation code that developed into PLASTIC.
 // Uses FFTW3 for the 3D transforms.
