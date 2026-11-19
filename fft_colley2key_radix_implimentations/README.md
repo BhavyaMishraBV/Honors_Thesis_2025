@@ -1,4 +1,4 @@
-## rd2: mixed-radix (2, 3, 5) FFT for 3D grids using Cooley–Tukey FFT algorithm
+## mixed-radix (2, 3, 5) FFT for 3D grids using Cooley–Tukey FFT algorithm
 
 A Cooley-Tukey FFT written from scratch that handles any grid whose side lengths are products of 2, 3 and 5 (for example 25, 30, 64 or 100), including non-cubic grids. It works directly on unflattened 3D arrays, so there is no power-of-2 size constraint and no need to flatten the data the way FFTW's plain interface does. It is the custom FFT from my honors thesis, built as a replacement for the FFTW3 calls in [Fast-12-Baseline](/Fast-12-Baseline).
 
