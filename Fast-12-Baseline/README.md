@@ -1,8 +1,8 @@
 # Fast-12
 
-A compact, single-file C++ program that evolves the cosmic pion field on a periodic 3D grid, using the FFTW3 library for all Fourier transforms. It is an early version of the code that grew into **PLASTIC++** in [Dr. Bart Horn's repository](https://github.com/bhorn9/pion_lss_code/blob/main/PLASTIC%2B%2B.cpp), and it is the baseline for the custom FFTs in [`fft_colley2key_radix_implimentations`](/fft_colley2key_radix_implimentations) and [`../FFT_with_CPU_Parallelization`](../FFT_with_CPU_Parallelization).
+A compact, single-file C++ program that evolves the cosmic pion field on a periodic 3D grid, using the FFTW3 library for all Fourier transforms. It is an early version of the code that grew into **PLASTIC++** in [Dr. Bart Horn's repository](https://github.com/bhorn9/pion_lss_code/blob/main/PLASTIC%2B%2B.cpp), and it is the baseline for the custom FFTs in [`fft_colley2key_radix_implimentations`](../fft_colley2key_radix_implimentations) and [`FFT_with_CPU_Parallelization`](../FFT_with_CPU_Parallelization).
 
-**Authors and copyright:** Dr. Bart Horn and Bhavya Mishra (co-authors and co-copyright holders). Released under the MIT license; see the header of `Source.cpp`.
+**Authors and copyright:** Dr. Bart Horn and Bhavya Mishra (co-authors and co-copyright holders). Released under the MIT license; see [`LICENSE`](LICENSE) in this folder and the header of `Source.cpp`.
 
 ## How it relates to PLASTIC++
 
@@ -42,16 +42,34 @@ The grid-size benchmarks in the thesis used a 25 x 25 x 25 grid (`meshpoints = 2
 
 Requires a C++17 compiler and FFTW3.
 
+Linux / macOS:
+
 ```bash
 g++ -O3 -std=c++17 Source.cpp -o fast12 -lfftw3 -lm
 ./fast12 path/to/ic_generated_random.txt
 ```
 
-On Ubuntu, install FFTW with `sudo apt install libfftw3-dev`. In Visual Studio, add the FFTW3 include and library paths to the project and link `libfftw3-3.lib`. Make sure only one source file with a `main()` is in the project.
+On Ubuntu, install FFTW with `sudo apt install libfftw3-dev`.
+
+Windows (MinGW). Download the FFTW binaries from [fftw.org/install/windows.html](https://www.fftw.org/install/windows.html), then:
+
+```
+g++ -O3 -std=c++17 Source.cpp -o fast12.exe -I"<path-to-fftw>\include" "<path-to-fftw>\bin\libfftw3-3.dll"
+copy "<path-to-fftw>\bin\libfftw3-3.dll" .
+fast12.exe path\to\ic_generated_random.txt
+```
+
+In Visual Studio, add the FFTW3 include and library paths to the project and link `libfftw3-3.lib`. Make sure only one source file with a `main()` is in the project.
+
+FFTW3 is a separate GPL-licensed library and is not included in this repository.
+
+## Replacing FFTW3 with the custom FFTs
+
+Fast-12 keeps the grid in flat 1D arrays and calls FFTW3 plans. The custom FFTs in the other folders work on `vector<vector<vector<complex<double>>>>` grids, so the data layout needs converting when you swap them in. FFTW's backward transform is not normalized, and Fast-12 multiplies by `1 / meshpoints^3` (`norm_factor`) after its backward transforms. The custom `ifft_3d` already divides by the number of grid points, so do not apply the factor twice.
 
 ## Related
 
-- [`../rd2`](../rd2): standalone radix-2/3/5 FFT that can replace the FFTW3 calls
-- [`../FFT_with_CPU_Parallelization`](../FFT_with_CPU_Parallelization): multithreaded FFT
+- [`fft_colley2key_radix_implimentations`](../fft_colley2key_radix_implimentations): standalone radix-2/3/5 FFT and inverse FFT that can replace the FFTW3 calls
+- [`FFT_with_CPU_Parallelization`](../FFT_with_CPU_Parallelization): multithreaded FFT and inverse FFT
 - [PLASTIC++ and the full code](https://github.com/bhorn9/pion_lss_code)
 - Paper: Celik, Horn, Mishra & Muqattash (2026), [arXiv:2604.12009](https://arxiv.org/abs/2604.12009)
