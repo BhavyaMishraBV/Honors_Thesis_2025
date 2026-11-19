@@ -1,6 +1,7 @@
 ## FFT_with_CPU_Parallelization: multithreaded mixed-radix FFT
 
-Here I discuss the mixed-radix (2, 3, 5) FFT and inverse FFT from [radix_2_3_5_integrated](fft_colley2key_radix_implimentatins/radix_2_3_5_integrated.cpp), with the work spread across CPU threads using OpenMP. A 3D FFT is a set of independent 1D FFTs along each axis, so each axis pass hands those 1D transforms to different threads. It works on any grid whose side lengths are products of 2, 3 and 5 (for example 25, 30, 64 or 100), including non-cubic grids.
+This folder holds a multithreaded version of the mixed-radix (2, 3, 5) FFT from fft_colley2key_radix_implimentations, extended with an inverse FFT and parallelized with OpenMP. A 3D FFT is a set of independent 1D FFTs along each axis, so each axis pass hands those 1D transforms to different threads. It works on any grid whose side lengths are products of 2, 3 and 5 (for example 25, 30, 64 or 100), including non-cubic grids.
+
 
 **Author:** Bhavya Mishra (advisor: Dr. Bart Horn). MIT license, see the header of `fft_cpu_parallel.cpp`.
 
